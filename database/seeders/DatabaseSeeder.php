@@ -160,12 +160,15 @@ class DatabaseSeeder extends Seeder
         }
 
         // Customers
+        $sampleNames = ['Budi Santoso', 'Siti Aminah', 'Andi Wijaya', 'Dewi Lestari', 'Agus Pratama'];
+        $samplePhones = ['081234567890', '085612345678', '081398765432', '089612344321', '087812348765'];
+        
         $customers = [];
         for ($i = 0; $i < 5; $i++) {
             $customers[] = Customer::create([
                 'tenant_id' => $tenant->id,
-                'name' => fake('id_ID')->name(),
-                'phone' => fake('id_ID')->phoneNumber(),
+                'name' => $sampleNames[$i],
+                'phone' => $samplePhones[$i],
             ]);
         }
 
