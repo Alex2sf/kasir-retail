@@ -79,7 +79,7 @@ class PosController extends Controller
         // Verify all products belong to this tenant
         foreach ($request->items as $item) {
             $product = Product::find($item['product_id']);
-            if ($product->tenant_id !== $this->tenantId()) {
+            if ($product->tenant_id != $this->tenantId()) {
                 return response()->json(['error' => 'Produk tidak valid.'], 403);
             }
             if ($product->track_stock && $product->stock < $item['quantity']) {
@@ -104,7 +104,7 @@ class PosController extends Controller
 
     public function receipt(Transaction $transaction)
     {
-        abort_if($transaction->tenant_id !== $this->tenantId(), 403);
+        abort_if($transaction->tenant_id != $this->tenantId(), 403);
         $transaction->load('items.product', 'customer', 'user', 'tenant');
 
         return view('owner.pos.receipt', compact('transaction'));
