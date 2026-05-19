@@ -54,9 +54,18 @@ class Transaction extends Model
     {
         $prefix = 'INV';
         $date = now()->format('Ymd');
-        $count = static::where('tenant_id', $tenantId)
+        
+        $latest = static::where('tenant_id', $tenantId)
             ->whereDate('created_at', today())
-            ->count() + 1;
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($latest) {
+            $latestCount = (int) substr($latest->invoice_number, -4);
+            $count = $latestCount + 1;
+        } else {
+            $count = 1;
+        }
 
         return sprintf('%s-%s-%04d', $prefix, $date, $count);
     }
