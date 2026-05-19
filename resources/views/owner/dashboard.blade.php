@@ -112,10 +112,13 @@
                 const driverObj = window.driver.js.driver({
                     showProgress: true,
                     steps: [
-                        { element: '#tour-sidebar', popover: { title: 'Menu Navigasi', description: 'Di sini Anda bisa mengakses semua fitur toko: kasir, produk, laporan, dll.', side: "right", align: 'start' }},
-                        { element: '#tour-pos-btn', popover: { title: 'Buka Kasir (POS)', description: 'Klik tombol ini untuk mulai melayani pelanggan dan mencatat transaksi.', side: "bottom", align: 'end' }},
-                        { element: '#tour-stats', popover: { title: 'Ringkasan Bisnis', description: 'Pantau omzet dan transaksi harian toko Anda secara real-time di sini.', side: "bottom", align: 'center' }},
-                        { element: '#tour-chart', popover: { title: 'Grafik Penjualan', description: 'Lihat tren penjualan 7 hari terakhir untuk analisa performa toko Anda.', side: "top", align: 'center' }}
+                        { popover: { title: 'Selamat Datang!', description: 'Toko Anda berhasil didaftarkan. Mari kita jelajahi fitur-fitur yang ada.', align: 'center' }},
+                        { element: '#menu-pos', popover: { title: 'Kasir / POS', description: 'Gunakan menu ini untuk melayani pembeli dan mencatat pesanan.', side: "right", align: 'start' }},
+                        { element: '#menu-produk', popover: { title: 'Kelola Produk', description: 'Kelola daftar barang dagangan, stok, dan harga jual di sini.', side: "right", align: 'start' }},
+                        { element: '#menu-kategori', popover: { title: 'Kategori Produk', description: 'Kelompokkan barang dagangan agar lebih rapi saat di kasir.', side: "right", align: 'start' }},
+                        { element: '#menu-transaksi', popover: { title: 'Riwayat Transaksi', description: 'Semua riwayat penjualan akan tercatat otomatis di menu ini.', side: "right", align: 'start' }},
+                        { element: '#menu-pengaturan', popover: { title: 'Pengaturan Toko', description: 'Atur nama toko, logo, pajak, dan metode pembayaran di sini.', side: "right", align: 'start' }},
+                        { element: '#tour-stats', popover: { title: 'Ringkasan Bisnis', description: 'Pantau omzet dan transaksi harian toko Anda secara real-time di sini.', side: "bottom", align: 'center' }}
                     ],
                     nextBtnText: 'Lanjut',
                     prevBtnText: 'Kembali',
