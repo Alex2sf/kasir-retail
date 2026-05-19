@@ -79,7 +79,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('owner.dashboard')->with('success', 'Selamat datang! Toko Anda berhasil didaftarkan.');
+        return redirect()->route('owner.dashboard')->with('success', 'Selamat datang! Toko Anda berhasil didaftarkan.')->with('show_onboarding_tour', true);
     }
 
     public function logout(Request $request)

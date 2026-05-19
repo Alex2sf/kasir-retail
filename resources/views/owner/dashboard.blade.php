@@ -3,14 +3,14 @@
     <x-slot:header>Dashboard</x-slot:header>
     <x-slot:subtitle>{{ $currentTenant->name ?? 'Toko Anda' }}</x-slot:subtitle>
     <x-slot:headerActions>
-        <a href="{{ route('owner.pos.index') }}" class="btn-primary">
+        <a id="tour-pos-btn" href="{{ route('owner.pos.index') }}" class="btn-primary">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             Buka Kasir
         </a>
     </x-slot:headerActions>
 
     {{-- Stat Cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+    <div id="tour-stats" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         <x-stat-card title="Omzet Hari Ini" :value="'Rp '.number_format($todayRevenue,0,',','.')" from="#6366f1" to="#8b5cf6" icon='<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1"/></svg>'/>
         <x-stat-card title="Transaksi Hari Ini" :value="number_format($todayTransactions)" from="#06b6d4" to="#0891b2" icon='<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/></svg>'/>
         <x-stat-card title="Omzet Bulan Ini" :value="'Rp '.number_format($monthRevenue,0,',','.')" from="#10b981" to="#059669" icon='<svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>'/>
@@ -19,7 +19,7 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         {{-- Chart --}}
-        <div class="lg:col-span-2 glass-card p-6">
+        <div id="tour-chart" class="lg:col-span-2 glass-card p-6">
             <h3 class="text-lg font-bold mb-4">📈 Penjualan 7 Hari Terakhir</h3>
             <div class="h-64"><canvas id="salesChart"></canvas></div>
         </div>
@@ -103,4 +103,28 @@
         });
     });
     </script>
+
+    @if(session('show_onboarding_tour'))
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            if (typeof window.driver !== 'undefined') {
+                const driverObj = window.driver.js.driver({
+                    showProgress: true,
+                    steps: [
+                        { element: '#tour-sidebar', popover: { title: 'Menu Navigasi', description: 'Di sini Anda bisa mengakses semua fitur toko: kasir, produk, laporan, dll.', side: "right", align: 'start' }},
+                        { element: '#tour-pos-btn', popover: { title: 'Buka Kasir (POS)', description: 'Klik tombol ini untuk mulai melayani pelanggan dan mencatat transaksi.', side: "bottom", align: 'end' }},
+                        { element: '#tour-stats', popover: { title: 'Ringkasan Bisnis', description: 'Pantau omzet dan transaksi harian toko Anda secara real-time di sini.', side: "bottom", align: 'center' }},
+                        { element: '#tour-chart', popover: { title: 'Grafik Penjualan', description: 'Lihat tren penjualan 7 hari terakhir untuk analisa performa toko Anda.', side: "top", align: 'center' }}
+                    ],
+                    nextBtnText: 'Lanjut',
+                    prevBtnText: 'Kembali',
+                    doneBtnText: 'Selesai',
+                });
+                driverObj.drive();
+            }
+        }, 500);
+    });
+    </script>
+    @endif
 </x-app-layout>

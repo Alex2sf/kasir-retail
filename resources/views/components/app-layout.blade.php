@@ -10,7 +10,7 @@
         </div>
 
         {{-- Sidebar --}}
-        <aside x-show="sidebarOpen"
+        <aside id="tour-sidebar" x-show="sidebarOpen"
                x-transition:enter="transition ease-in-out duration-300 transform"
                x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
                x-transition:leave="transition ease-in-out duration-300 transform"
