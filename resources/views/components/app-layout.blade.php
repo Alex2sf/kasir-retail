@@ -18,9 +18,10 @@
                class="fixed lg:sticky top-0 left-0 z-50 h-screen w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col overflow-y-auto">
 
             {{-- Logo --}}
-            <div class="flex items-center px-6 py-5 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-3 px-6 py-5 border-b border-slate-200 dark:border-slate-700">
+                <img src="{{ asset('logo.png') }}" alt="Logo" class="w-8 h-8 object-contain">
                 <div>
-                    <h1 class="text-lg font-bold text-gradient">
+                    <h1 class="text-base font-bold text-gradient truncate max-w-[170px]">
                         {{ auth()->user() && auth()->user()->role === 'owner' && auth()->user()->tenant ? auth()->user()->tenant->name : 'Warunggalih' }}
                     </h1>
                 </div>
