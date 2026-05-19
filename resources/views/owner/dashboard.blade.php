@@ -3,6 +3,9 @@
     <x-slot:header>Dashboard</x-slot:header>
     <x-slot:subtitle>{{ $currentTenant->name ?? 'Toko Anda' }}</x-slot:subtitle>
     <x-slot:headerActions>
+        <button onclick="startDashboardTour()" class="p-2.5 mr-2 rounded-xl text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all" title="Mulai Panduan">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </button>
         <a id="tour-pos-btn" href="{{ route('owner.pos.index') }}" class="btn-primary">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
             Buka Kasir
@@ -104,28 +107,34 @@
     });
     </script>
 
+    <script>
+    function startDashboardTour() {
+        if (typeof window.driver !== 'undefined') {
+            const driverObj = window.driver.js.driver({
+                showProgress: true,
+                steps: [
+                    { popover: { title: 'Selamat Datang!', description: 'Mari kita jelajahi fitur-fitur yang ada di Dashboard toko Anda.', align: 'center' }},
+                    { element: '#menu-pos', popover: { title: 'Kasir / POS', description: 'Gunakan menu ini untuk melayani pembeli dan mencatat pesanan.', side: "right", align: 'start' }},
+                    { element: '#menu-produk', popover: { title: 'Kelola Produk', description: 'Kelola daftar barang dagangan, stok, dan harga jual di sini.', side: "right", align: 'start' }},
+                    { element: '#menu-kategori', popover: { title: 'Kategori Produk', description: 'Kelompokkan barang dagangan agar lebih rapi saat di kasir.', side: "right", align: 'start' }},
+                    { element: '#menu-transaksi', popover: { title: 'Riwayat Transaksi', description: 'Semua riwayat penjualan akan tercatat otomatis di menu ini.', side: "right", align: 'start' }},
+                    { element: '#menu-pengaturan', popover: { title: 'Pengaturan Toko', description: 'Atur nama toko, logo, pajak, dan metode pembayaran di sini.', side: "right", align: 'start' }},
+                    { element: '#tour-stats', popover: { title: 'Ringkasan Bisnis', description: 'Pantau omzet dan transaksi harian toko Anda secara real-time di sini.', side: "bottom", align: 'center' }}
+                ],
+                nextBtnText: 'Lanjut',
+                prevBtnText: 'Kembali',
+                doneBtnText: 'Selesai',
+            });
+            driverObj.drive();
+        }
+    }
+    </script>
+
     @if(session('show_onboarding_tour'))
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
-            if (typeof window.driver !== 'undefined') {
-                const driverObj = window.driver.js.driver({
-                    showProgress: true,
-                    steps: [
-                        { popover: { title: 'Selamat Datang!', description: 'Toko Anda berhasil didaftarkan. Mari kita jelajahi fitur-fitur yang ada.', align: 'center' }},
-                        { element: '#menu-pos', popover: { title: 'Kasir / POS', description: 'Gunakan menu ini untuk melayani pembeli dan mencatat pesanan.', side: "right", align: 'start' }},
-                        { element: '#menu-produk', popover: { title: 'Kelola Produk', description: 'Kelola daftar barang dagangan, stok, dan harga jual di sini.', side: "right", align: 'start' }},
-                        { element: '#menu-kategori', popover: { title: 'Kategori Produk', description: 'Kelompokkan barang dagangan agar lebih rapi saat di kasir.', side: "right", align: 'start' }},
-                        { element: '#menu-transaksi', popover: { title: 'Riwayat Transaksi', description: 'Semua riwayat penjualan akan tercatat otomatis di menu ini.', side: "right", align: 'start' }},
-                        { element: '#menu-pengaturan', popover: { title: 'Pengaturan Toko', description: 'Atur nama toko, logo, pajak, dan metode pembayaran di sini.', side: "right", align: 'start' }},
-                        { element: '#tour-stats', popover: { title: 'Ringkasan Bisnis', description: 'Pantau omzet dan transaksi harian toko Anda secara real-time di sini.', side: "bottom", align: 'center' }}
-                    ],
-                    nextBtnText: 'Lanjut',
-                    prevBtnText: 'Kembali',
-                    doneBtnText: 'Selesai',
-                });
-                driverObj.drive();
-            }
+            startDashboardTour();
         }, 500);
     });
     </script>
