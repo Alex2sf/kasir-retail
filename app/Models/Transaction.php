@@ -52,7 +52,7 @@ class Transaction extends Model
 
     public static function generateInvoiceNumber(int $tenantId): string
     {
-        $prefix = 'INV';
+        $prefix = 'INV-' . $tenantId;
         $date = now()->format('Ymd');
         
         $latest = static::where('tenant_id', $tenantId)
