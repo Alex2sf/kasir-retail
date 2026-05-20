@@ -63,6 +63,7 @@ Route::middleware(['auth', 'role:owner', 'tenant.access'])->prefix('owner')->nam
 
     // Transactions
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/export', [TransactionController::class, 'export'])->name('transactions.export');
     Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
 
     // Customers
